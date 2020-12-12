@@ -1,23 +1,37 @@
-import Head from 'next/head'
-import Header from '@components/Header'
-import Footer from '@components/Footer'
+import Head from "next/head";
+import Header from "@components/Header";
+import Footer from "@components/Footer";
+import React, { useEffect, useState } from "react";
 
 export default function Home() {
-  return (
-    <div className="container">
-      <Head>
-        <title>Next.js Starter!</title>
-        <link rel="icon" href="/favicon.ico" />
-      </Head>
+    const hello = async () => {
+        try {
+            const res = await fetch("/.netlify/functions/hello");
+            console.log(res.json());
+        } catch (err) {
+            console.error(err);
+        }
+    };
 
-      <main>
-        <Header title="Welcome to my app!" />
-        <p className="description">
-          Get started by editing <code>pages/index.js</code>
-        </p>
-      </main>
+    useEffect(() => {
+        hello();
+    }, []);
 
-      <Footer />
-    </div>
-  )
+    return (
+        <div className="container">
+            <Head>
+                <title>Next.js Starter!</title>
+                <link rel="icon" href="/favicon.ico" />
+            </Head>
+
+            <main>
+                <Header title="Welcome to my app!" />
+                <p className="description">
+                    Get started by editing <code>pages/index.js</code>
+                </p>
+            </main>
+
+            <Footer />
+        </div>
+    );
 }
